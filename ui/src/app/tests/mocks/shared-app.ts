@@ -1,11 +1,11 @@
 import {SharedAppsService} from '../../shared/services/shared-apps.service';
 import {PageRequest} from '../../shared/model/pagination/page-request.model';
 import {ApplicationType} from '../../shared/model/application-type';
-import {Observable} from 'rxjs/Rx';
 import {Page} from '../../shared/model/page';
 import {AppRegistration} from '../../shared/model/app-registration.model';
 import {DetailedAppRegistration} from '../../shared/model/detailed-app-registration.model';
 import {Flo} from 'spring-flo';
+import {Observable} from 'rxjs/Observable';
 
 const METAMODEL_DATA: Array<RawMetadata> = [{
   name: 'http', type: 'source', description: 'Receive HTTP input',

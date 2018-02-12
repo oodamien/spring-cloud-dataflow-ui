@@ -24,13 +24,13 @@
                  [ngForOf]="runtimeApps.items | paginate: runtimeApps.getPaginationInstance()">
             <tr>
                 <td>
-                    <a (click)="appDetails(item)">{{item.deploymentId}}</a>
+                    <a (click)="appDetails(item)">{{ item.deploymentId }}</a>
                 </td>
                 <td>
-                    {{item.state}}
+                    {{ item.state }}
                 </td>
                 <td>
-                    {{item.instances._embedded.appInstanceStatusResourceList.length}}
+                    {{ item.instances._embedded.appInstanceStatusResourceList.length }}
                 </td>
             </tr>
     </ng-template>
@@ -42,7 +42,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content " *ngIf="runtimeApp">
             <div class="modal-header">
-                <h4 class="modal-title">Instances for app <strong>{{runtimeApp.deploymentId}}</strong></h4>
+                <h4 class="modal-title">Instances for app <strong>{{ runtimeApp.deploymentId }}</strong></h4>
                 <button type="button" class="close pull-right" aria-label="Close" (click)="hideChildModal()">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -51,17 +51,17 @@
                 <ng-template ngFor let-item
                              [ngForOf]="runtimeApp.appInstances">
                     <div class="row">
-                        <p>Instance ID: <strong>{{item.instanceId}}</strong></p>
+                        <p>Instance ID: <strong>{{ item.instanceId }}</strong></p>
                     </div>
                     <div class="row">
-                        <p>Status: <strong>{{item.state}}</strong></p>
+                        <p>Status: <strong>{{ item.state }}</strong></p>
                     </div>
                     <div class="row">
                         <h2>Attributes</h2>
                         <ng-template ngFor let-item
                                      [ngForOf]="item.attributes | keyvalues">
-                            <h4>{{item.key}}</h4>
-                            <pre class="pre-scrollable">{{item.value}}</pre>
+                            <h4>{{ item.key }}</h4>
+                            <pre class="pre-scrollable">{{ item.value }}</pre>
                         </ng-template>
                     </div>
                 </ng-template>

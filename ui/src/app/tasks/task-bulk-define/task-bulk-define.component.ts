@@ -91,7 +91,7 @@ export class TaskBulkDefineComponent implements OnInit {
     const file: File = event.target.files[0];
     const reader: FileReader = new FileReader();
     const _form = this.form;
-    reader.onloadend = function(e){
+    reader.onloadend = function(e) {
       _form.patchValue({definitions: reader.result});
     };
     reader.readAsText(file);

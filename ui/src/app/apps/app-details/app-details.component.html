@@ -7,7 +7,7 @@
         Name
       </th>
       <td>
-        {{detailedAppRegistration.name}}
+        {{ detailedAppRegistration.name }}
       </td>
     </tr>
     <tr>
@@ -15,7 +15,7 @@
         Type
       </th>
       <td>
-        {{detailedAppRegistration.type}}
+        {{ detailedAppRegistration.type }}
       </td>
     </tr>
     <tr>
@@ -23,7 +23,7 @@
         Uri
       </th>
       <td>
-        {{detailedAppRegistration.uri}}
+        {{ detailedAppRegistration.uri }}
       </td>
     </tr>
   </tbody>
@@ -41,11 +41,11 @@
   <tbody>
     <tr *ngFor="let property of detailedAppRegistration.options">
       <th>
-        {{property.name}} <span *ngIf="property.isDeprecated" class="label label-warning">Deprecation level: {{property.deprecation.level}}</span>
+        {{ property.name }} <span *ngIf="property.isDeprecated" class="label label-warning">Deprecation level: {{ property.deprecation.level }}</span>
       </th>
       <td>
-          <p>{{property.description ? property.description : '(No Description Available)'}}</p>
-          <p class="type-block"><code>{{property.type}}</code> <span *ngIf="property.defaultValue">(Default value: <code>{{property.defaultValue}}</code>)</span></p>
+          <p>{{ property.description ? property.description : '(No Description Available)' }}</p>
+          <p class="type-block"><code>{{ property.type }}</code> <span *ngIf="property.defaultValue">(Default value: <code>{{ property.defaultValue }}</code>)</span></p>
       </td>
     </tr>
   </tbody>

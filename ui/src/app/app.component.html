@@ -23,7 +23,7 @@
               dropdown
               class="dropdown"><a class="dropdown-toggle" dropdownToggle (click)="false"><span class="glyphicon glyphicon-user"></span><b class="caret"></b></a>
             <ul *dropdownMenu class="dropdown-menu">
-              <li *ngIf="securityInfo.isAuthenticated">{{securityInfo.username}}</li>
+              <li *ngIf="securityInfo.isAuthenticated">{{ securityInfo.username }}</li>
               <li *ngIf="!securityInfo.isAuthenticated">Not logged in.</li>
               <li *ngIf="securityInfo.isAuthenticated"><a  routerLink="logout">Logout</a></li>
               <li *ngIf="!securityInfo.isAuthenticated"><a routerLink="login">Login</a></li>
