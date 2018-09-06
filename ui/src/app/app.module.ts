@@ -16,7 +16,8 @@ import { SharedAboutService } from './shared/services/shared-about.service';
 import { LayoutModule } from './layout/layout.module';
 import { AuditRecordModule } from './audit/audit-record.module';
 import { map } from 'rxjs/operators';
-
+import { DevModule } from './dev/dev.module';
+import { environment } from '../environments/environment';
 
 
 /**
@@ -26,6 +27,7 @@ import { map } from 'rxjs/operators';
  * before the Promise has resolved.
  *
  * @param authService
+ * @param sharedAboutService
  */
 export function init(authService: AuthService, sharedAboutService: SharedAboutService) {
   return () => {
@@ -40,6 +42,20 @@ export function init(authService: AuthService, sharedAboutService: SharedAboutSe
   };
 }
 
+const FEATURED_MODULE = [
+  AppsModule,
+  JobsModule,
+  RuntimeAppsModule,
+  SharedModule,
+  StreamsModule,
+  TasksModule,
+  LayoutModule
+];
+
+if (!environment.production) {
+  FEATURED_MODULE.push(DevModule);
+}
+
 @NgModule({
   declarations: [
     AppComponent
@@ -51,22 +67,18 @@ export function init(authService: AuthService, sharedAboutService: SharedAboutSe
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    JobsModule,
-    RuntimeAppsModule,
-    SharedModule,
-    StreamsModule,
-    TasksModule,
-    LayoutModule,
+    FEATURED_MODULE,
     BsDropdownModule.forRoot()
   ],
   providers: [
     {
       'provide': APP_INITIALIZER,
       'useFactory': init,
-      'deps': [ AuthService, SharedAboutService ],
+      'deps': [AuthService, SharedAboutService],
       'multi': true
     }
   ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

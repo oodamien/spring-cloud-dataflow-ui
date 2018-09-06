@@ -1,0 +1,20 @@
+
+.actions-run {
+  border-bottom: 1px solid #dfe5e8;
+  margin-bottom: 2rem;
+  p {
+    border-top: 1px solid #dfe5e8;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    line-height: 38px;
+    .btn {
+      position: absolute;
+      top: 2px;
+      right: 0;
+    }
+  }
+  h2 {
+    padding: 1rem 0;
+  }
+}

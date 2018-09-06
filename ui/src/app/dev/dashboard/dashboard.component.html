@@ -1,0 +1,62 @@
+<app-page>
+
+  <app-page-head>
+    <app-page-head-title><strong>Dev Dashboard</strong></app-page-head-title>
+  </app-page-head>
+
+  <div dataflowLayoutType type="small">
+    <div class="actions-run">
+      <h2>Applications</h2>
+      <p>
+        Import Apps Starter for Stream/Task
+        <button [disabled]="processing" (click)="runOperation('IMPORT_APPS')" class="btn btn-primary">Run</button>
+      </p>
+      <p>
+        Import Apps Starter for Stream
+        <button [disabled]="processing" (click)="runOperation('IMPORT_APPS_STREAM')" class="btn btn-primary">Run</button>
+      </p>
+      <p>
+        Import Apps Starter for Task
+        <button [disabled]="processing" (click)="runOperation('IMPORT_APPS_TASK')" class="btn btn-primary">Run</button>
+      </p>
+    </div>
+    <div class="actions-run">
+      <h2>Streams</h2>
+      <p>
+        Create 20 random streams
+        <button [disabled]="processing" (click)="runOperation('CREATE_STREAM')" class="btn btn-primary">Run</button>
+      </p>
+      <p>
+        Create and deploy 20 random streams
+        <button [disabled]="processing" (click)="runOperation('CREATE_DEPLOY_STREAM')" class="btn btn-primary">Run</button>
+      </p>
+    </div>
+    <div class="actions-run">
+      <h2>Tasks</h2>
+      <p>
+        Create 20 random tasks
+        <button [disabled]="processing" (click)="runOperation('CREATE_TASK')" class="btn btn-primary">Run</button>
+      </p>
+      <p>
+        Create and deploy 20 random tasks
+        <button [disabled]="processing" (click)="runOperation('CREATE_LAUNCH_TASK')" class="btn btn-primary">Run</button>
+      </p>
+    </div>
+    <div class="actions-run">
+      <h2>Jobs</h2>
+      <p>
+        Create 20 random task jobs
+        <button [disabled]="processing" (click)="runOperation('CREATE_TASK_JOB')" class="btn btn-primary">Run</button>
+      </p>
+      <p>
+        Create and deploy 20 random task jobs
+        <button [disabled]="processing" (click)="runOperation('CREATE_LAUNCH_TASK_JOB')" class="btn btn-primary">Run</button>
+      </p>
+    </div>
+  </div>
+
+  <div *ngIf="processing">
+    <app-loader text="Procesing…"></app-loader>
+  </div>
+
+</app-page>

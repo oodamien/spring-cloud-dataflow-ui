@@ -4,6 +4,7 @@ import { AuthService } from '../../auth/auth.service';
 import { SharedAboutService } from 'src/app/shared/services/shared-about.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 /**
  * Navigation component
@@ -44,6 +45,11 @@ export class NavigationComponent implements DoCheck, OnInit, OnDestroy {
    * @type {boolean}
    */
   isSm = false;
+
+  /**
+   * Is Dev mode
+   */
+  isDev = !environment.production;
 
   /**
    * Contructor

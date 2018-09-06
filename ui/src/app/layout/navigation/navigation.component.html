@@ -69,6 +69,12 @@
       </a>
     </div>
   </div>
+  <div class="sidebar-item" routerLinkActive="active" *ngIf="isDev">
+    <a routerLink="dev">
+      <i class="sidebar-fa fa fa-code"></i>
+      <span class="text">Dev</span>
+    </a>
+  </div>
 </div>
 
 <div *ngIf="!featureInfoLoaded">
