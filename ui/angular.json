@@ -25,6 +25,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
+              "src/manifest.json",
               "src/logout-success-oauth.html"
             ],
             "styles": [
@@ -83,6 +84,7 @@
             "scripts": [],
             "assets": [
               "src/favicon.ico",
+              "src/manifest.json",
               "src/assets",
               "src/logout-success-oauth.html"
             ]
