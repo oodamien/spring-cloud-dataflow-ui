@@ -2,6 +2,7 @@ import { Moment } from 'moment';
 import { DateTimeUtils } from '../../shared/support/date-time.utils';
 import { StepExecution } from './step-execution.model';
 import * as moment from 'moment';
+import { Page } from '../../shared/model/page';
 
 export class JobExecution {
   public name: string;
@@ -56,6 +57,18 @@ export class JobExecution {
       jobExecution.stepExecutions = input.jobExecution.stepExecutions.map(StepExecution.fromJSON);
     }
     return jobExecution;
+  }
+
+  static pageFromJSON(input): Page<JobExecution> {
+    const page = new Page<JobExecution>();
+    if (input._embedded && input._embedded.jobExecutionResourceList) {
+      page.items = input._embedded.jobExecutionResourceList.map(JobExecution.fromJSON);
+    }
+    page.totalElements = input.page.totalElements;
+    page.pageNumber = input.page.number;
+    page.pageSize = input.page.size;
+    page.totalPages = input.page.totalPages;
+    return page;
   }
 
 }

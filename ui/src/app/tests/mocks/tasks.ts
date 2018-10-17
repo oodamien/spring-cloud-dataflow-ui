@@ -154,87 +154,35 @@ export class MockTasksService {
   }
 
   getExecutions(): Observable<Page<TaskExecution>> {
-    const page = new Page<TaskExecution>();
+    let page = new Page<TaskExecution>();
     if (this.taskExecutions) {
-      const response = this.taskExecutions;
-      let items: TaskExecution[];
-      if (response._embedded && response._embedded.taskExecutionResourceList) {
-        items = response._embedded.taskExecutionResourceList as TaskExecution[];
-      } else {
-        items = [];
-      }
-      page.items = items;
-      page.totalElements = response.page.totalElements;
-      page.totalPages = response.page.totalPages;
-      page.pageNumber = response.page.number;
-      page.pageSize = response.page.size;
+      page = TaskExecution.pageFromJSON(this.taskExecutions);
     }
     return Observable.of(page);
   }
 
   getDefinitions(): Observable<Page<TaskDefinition>> {
-    const page = new Page<TaskDefinition>();
+    let page = new Page<TaskDefinition>();
     if (this.taskDefinitions) {
-      const response = this.taskDefinitions;
-      let items: TaskDefinition[];
-      if (response._embedded && response._embedded.taskDefinitionResourceList) {
-        items = response._embedded.taskDefinitionResourceList as TaskDefinition[];
-      } else {
-        items = [];
-      }
-      page.items = items;
-      page.totalElements = response.page.totalElements;
-      page.totalPages = response.page.totalPages;
-      page.pageNumber = response.page.number;
-      page.pageSize = response.page.size;
+      page = TaskDefinition.pageFromJSON(this.taskDefinitions);
     }
     return Observable.of(page);
   }
 
   getSchedules(taskListParams: TaskListParams): Observable<Page<TaskSchedule>> {
-    const page = new Page<TaskSchedule>();
+    let page = new Page<TaskSchedule>();
     if (this.taskSchedules) {
-      const response = this.taskSchedules;
-      let items: TaskSchedule[];
-      if (response._embedded && response._embedded.taskScheduleResourceList) {
-        items = response._embedded.taskScheduleResourceList as TaskSchedule[];
-      } else {
-        items = [];
-      }
-      page.items = items;
-      page.totalElements = response.page.totalElements;
-      page.totalPages = response.page.totalPages;
-      page.pageNumber = response.page.number;
-      page.pageSize = response.page.size;
-    }
-    return Observable.of(page);
-  }
-
-  getScheduleByTask(taskScheduleListParams: ListDefaultParams): Observable<Page<TaskSchedule>> {
-    const page = new Page<TaskSchedule>();
-    if (this.taskSchedules) {
-      const response = this.taskSchedules;
-      let items: TaskSchedule[];
-      if (response._embedded && response._embedded.taskScheduleResourceList) {
-        items = response._embedded.taskScheduleResourceList as TaskSchedule[];
-      } else {
-        items = [];
-      }
-      page.items = items;
-      page.totalElements = response.page.totalElements;
-      page.totalPages = response.page.totalPages;
-      page.pageNumber = response.page.number;
-      page.pageSize = response.page.size;
+      page = TaskSchedule.pageFromJSON(this.taskSchedules);
     }
     return Observable.of(page);
   }
 
   getSchedule(scheduleName: string): Observable<TaskSchedule> {
-    return Observable.of(this.taskSchedules._embedded.taskScheduleResourceList[0]);
+    return Observable.of(TaskSchedule.fromJSON(this.taskSchedules._embedded.scheduleInfoResourceList[0]));
   }
 
   getDefinition(name: string): Observable<any> {
-    return Observable.of(this.taskDefinitions._embedded.taskDefinitionResourceList[0]);
+    return Observable.of(TaskDefinition.fromJSON(this.taskDefinitions._embedded.taskDefinitionResourceList[0]));
   }
 
   destroySchedule(taskSchedules: TaskSchedule): Observable<any> {

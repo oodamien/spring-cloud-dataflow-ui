@@ -47,26 +47,15 @@ export class MockStreamsService {
   }
 
   getDefinitions(): Observable<Page<StreamDefinition>> {
-    const page = new Page<StreamDefinition>();
+    let page = new Page<StreamDefinition>();
     if (this.streamDefinitions) {
-      const response = this.streamDefinitions;
-      let items: StreamDefinition[];
-      if (response._embedded && response._embedded.streamDefinitionResourceList) {
-        items = response._embedded.streamDefinitionResourceList as StreamDefinition[];
-      } else {
-        items = [];
-      }
-      page.items = items;
-      page.totalElements = response.page.totalElements;
-      page.totalPages = response.page.totalPages;
-      page.pageNumber = response.page.number;
-      page.pageSize = response.page.size;
+      page = StreamDefinition.pageFromJSON(this.streamDefinitions);
     }
     return Observable.of(page);
   }
 
   getDefinition(name: string): Observable<any> {
-    return Observable.of(this.streamDefinitions._embedded.streamDefinitionResourceList[0]);
+    return Observable.of(StreamDefinition.fromJSON(this.streamDefinitions._embedded.streamDefinitionResourceList[0]));
   }
 
   undeployDefinition(streamDefinition: StreamDefinition): Observable<Response> | Observable<any> {
@@ -97,21 +86,31 @@ export class MockStreamsService {
     return Observable.of([]);
   }
 
-  platforms(): Observable<Platform[]> {
+  getPlatforms(): Observable<Platform[]> {
     return Observable.of([
-      new Platform('default', 'local'),
-      new Platform('foo', 'bar', 'foobar')
+      Platform.fromJSON({name: 'default', type: 'local', description: ''}),
+      Platform.fromJSON({name: 'foo', type: 'bar', description: 'foobar'})
     ]);
   }
 
-  metrics(streamNames?: string[]): Observable<StreamMetrics[]> {
+  getMetrics(streamNames?: string[]): Observable<StreamMetrics[]> {
     return Observable.of([]);
   }
 
   getHistory(streamDefinition: string): Observable<StreamHistory[]> {
     return Observable.of([
-      new StreamHistory(streamDefinition, 2, new Date(), 'DEPLOYED', 'Upgrade complete', 'default'),
-      new StreamHistory(streamDefinition, 1, new Date(), 'DELETED', 'Delete complete', 'default')
+      StreamHistory.fromJSON({
+        name: streamDefinition,
+        version: 2,
+        platformName: 'default',
+        info: { firstDeployed: new Date(), status: { statusCode: 'DEPLOYED' }, description: 'Upgrade complete' }
+      }),
+      StreamHistory.fromJSON({
+        name: streamDefinition,
+        version: 1,
+        platformName: 'default',
+        info: { firstDeployed: new Date(), status: { statusCode: 'DELETED' }, description: 'Delete complete' }
+      })
     ]);
   }
 

@@ -1,5 +1,8 @@
 import { Moment } from 'moment';
 import * as moment from 'moment';
+import { Page } from '../../shared/model/page';
+import { Task } from 'protractor/built/taskScheduler';
+import { Serializable } from '../../shared/model/serialization/serializable.model';
 
 export class TaskExecution {
 
@@ -36,7 +39,7 @@ export class TaskExecution {
     this.externalExecutionId = externalExecutionId;
   }
 
-  static fromJSON(jsonItem) {
+  static fromJSON(jsonItem): TaskExecution {
     return new TaskExecution(
       jsonItem.executionId,
       jsonItem.exitCode,
@@ -48,6 +51,20 @@ export class TaskExecution {
       jsonItem.jobExecutionIds,
       jsonItem.errorMessage,
       jsonItem.externalExecutionId);
+  }
+
+  static pageFromJSON(input): Page<TaskExecution> {
+    const taskExecutions = new Page<TaskExecution>();
+    if (input._embedded && input._embedded.taskExecutionResourceList) {
+      taskExecutions.items = input._embedded.taskExecutionResourceList.map(TaskExecution.fromJSON);
+    }
+    if (input.page) {
+      taskExecutions.pageNumber = input.page.number;
+      taskExecutions.pageSize = input.page.size;
+      taskExecutions.totalElements = input.page.totalElements;
+      taskExecutions.totalPages = input.page.totalPages;
+    }
+    return taskExecutions;
   }
 
 }

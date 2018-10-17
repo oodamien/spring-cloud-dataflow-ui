@@ -89,64 +89,41 @@ export class AuditRecordService {
     if (auditRecordListParams.sort && auditRecordListParams.order) {
       params = params.append('sort', `${auditRecordListParams.sort},${auditRecordListParams.order}`);
     }
-    return this.httpClient.get<any>(AuditRecordService.URL, {
-      params: params,
-      headers: HttpUtils.getDefaultHttpHeaders(),
-      observe: 'response'
-    })
-      .map(response => {
-        const body = response.body;
-        const page = new Page<AuditRecord>();
-        if (body._embedded && body._embedded.auditRecordResourceList) {
-          page.items = body._embedded.auditRecordResourceList.map(AuditRecord.fromJSON);
-        }
-        if (body.page) {
-          page.pageNumber = body.page.number;
-          page.pageSize = body.page.size;
-          page.totalElements = body.page.totalElements;
-          page.totalPages = body.page.totalPages;
-        }
-        return page;
-      })
+    return this.httpClient
+      .get<any>(AuditRecordService.URL, { params: params, headers: HttpUtils.getDefaultHttpHeaders() })
+      .map(AuditRecord.pageFromJSON)
       .catch(this.errorHandler.handleError);
   }
 
   /**
    * Load Audit Operation Types
-   * @returns {Subscription}
+   * @returns {Observable}
    */
   loadAuditOperationTypes() {
     this.loggerService.log('Getting audit operation types.');
-    return this.httpClient.get<any>(AuditRecordService.URL + '/audit-operation-types',
-      {
-        headers: HttpUtils.getDefaultHttpHeaders(),
-        observe: 'response'
-      })
-      .catch(this.errorHandler.handleError)
-      .subscribe(response => {
-        const actions: object[] = response.body;
-        const auditOperationTypes: AuditOperationType[] = actions.map(AuditOperationType.fromJSON);
+    return this.httpClient
+      .get<any>(AuditRecordService.URL + '/audit-operation-types',
+        { headers: HttpUtils.getDefaultHttpHeaders() })
+      .map(response => {
+        const auditOperationTypes: AuditOperationType[] = response.map(AuditOperationType.fromJSON);
         this.auditOperationTypes$.next(auditOperationTypes);
-      });
+      })
+      .catch(this.errorHandler.handleError);
   }
 
   /**
    * Load Audit Action Types
-   * @returns {Subscription}
+   * @returns {Observable}
    */
   loadAuditActionTypes() {
     this.loggerService.log('Getting audit action types.');
     return this.httpClient.get<any>(AuditRecordService.URL + '/audit-action-types',
-      {
-        headers: HttpUtils.getDefaultHttpHeaders(),
-        observe: 'response'
-      })
-      .catch(this.errorHandler.handleError)
-      .subscribe(response => {
-        const actions: object[] = response.body;
-        const auditActionTypes: AuditActionType[] = actions.map(AuditActionType.fromJSON);
+      { headers: HttpUtils.getDefaultHttpHeaders() })
+      .map(response => {
+        const auditActionTypes: AuditActionType[] = response.map(AuditActionType.fromJSON);
         this.auditActionTypes$.next(auditActionTypes);
-      });
+      })
+      .catch(this.errorHandler.handleError);
   }
 
   /**

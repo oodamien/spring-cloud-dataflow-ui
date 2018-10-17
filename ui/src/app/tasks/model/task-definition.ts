@@ -1,27 +1,40 @@
+import { Page } from 'src/app/shared/model';
+
 export class TaskDefinition {
 
   public name: string;
+
   public dslText: string;
+
   public composed: boolean;
+
   public status: string;
 
-  constructor(name: string,
-              dslText: string,
-              composed: boolean,
-              status: string) {
+  constructor(name: string, dslText: string, composed: boolean, status: string) {
     this.name = name;
     this.dslText = dslText;
     this.composed = composed;
     this.status = status;
   }
 
-  static fromJSON(input) {
-    return new TaskDefinition(
-      input.name,
-      input.dslText,
-      input.composed,
-      input.status
-    );
+  static fromJSON(input): TaskDefinition {
+    return new TaskDefinition(input.name, input.dslText, input.composed, input.status);
+  }
+
+  static pageFromJSON(input): Page<TaskDefinition> {
+    const taskDefinitions = new Page<TaskDefinition>();
+    if (input) {
+      if (input._embedded && input._embedded.taskDefinitionResourceList) {
+        taskDefinitions.items = input._embedded.taskDefinitionResourceList.map(TaskDefinition.fromJSON);
+      }
+      if (input.page) {
+        taskDefinitions.pageNumber = input.page.number;
+        taskDefinitions.pageSize = input.page.size;
+        taskDefinitions.totalElements = input.page.totalElements;
+        taskDefinitions.totalPages = input.page.totalPages;
+      }
+    }
+    return taskDefinitions;
   }
 
 }
